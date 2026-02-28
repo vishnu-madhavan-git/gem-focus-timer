@@ -1,94 +1,162 @@
-import { Bot, Code, Search, Zap, Plus } from "lucide-react";
+import { Bot, Code, Search, Zap, Plus, Palette } from "lucide-react";
 
 const agents = [
   {
-    name: 'Research Assistant',
+    name: "Research",
     icon: Search,
-    status: 'Active',
-    desc: 'Searches and summarizes topics',
-    gradient: 'from-purple-500 to-violet-700',
+    status: "Active",
+    desc: "Searches and summarizes topics",
+    gradient: "linear-gradient(135deg, #8B5CF6, #7C3AED)",
     active: true,
   },
   {
-    name: 'Code Reviewer',
+    name: "Code Review",
     icon: Code,
-    status: 'Active',
-    desc: 'Reviews and optimizes your code',
-    gradient: 'from-blue-500 to-cyan-600',
+    status: "Blocking",
+    desc: "Reviews and optimizes your code",
+    gradient: "linear-gradient(135deg, #3B82F6, #2563EB)",
     active: true,
   },
   {
-    name: 'Focus Coach',
-    icon: Zap,
-    status: 'Idle',
-    desc: 'Keeps you on track and motivated',
-    gradient: 'from-amber-500 to-orange-600',
+    name: "Design",
+    icon: Palette,
+    status: "Idle",
+    desc: "Generates UI ideas and layouts",
+    gradient: "linear-gradient(135deg, #EC4899, #DB2777)",
     active: false,
   },
   {
-    name: 'Ruby Guide',
-    icon: Bot,
-    status: 'Idle',
-    desc: 'Your personal productivity guide',
-    gradient: 'from-red-500 to-pink-600',
+    name: "Focus Coach",
+    icon: Zap,
+    status: "Idle",
+    desc: "Keeps you on track and motivated",
+    gradient: "linear-gradient(135deg, #10B981, #059669)",
     active: false,
   },
 ];
 
 const AgentsScreen = () => {
   return (
-    <div className="flex flex-col h-full overflow-y-auto pb-6 px-4 pt-4 space-y-5">
-      {/* Heading */}
-      <div>
-        <h1 className="text-white font-black text-3xl tracking-tight">AI Agents</h1>
-        <p className="text-white/40 text-sm mt-1">Powered by 9 Ruby intelligence</p>
+    <div className="flex flex-col h-full overflow-y-auto pb-6 px-4 pt-4 space-y-4" style={{ scrollbarWidth: "none" }}>
+
+      {/* ── HEADER ── */}
+      <div style={{ height: 64, paddingTop: 8 }}>
+        <h1 className="text-white font-bold" style={{ fontSize: 32, letterSpacing: "-0.5px", lineHeight: 1.2 }}>
+          AI Agents
+        </h1>
+        <div className="flex items-center gap-2 mt-1">
+          <div
+            className="rounded-full pulse-dot"
+            style={{ width: 8, height: 8, background: "#10B981", flexShrink: 0 }}
+          />
+          <span style={{ fontSize: 13, color: "rgba(255,255,255,0.5)" }}>
+            <span className="text-white font-bold">2</span> agents currently active
+          </span>
+        </div>
       </div>
 
-      {/* Active count */}
-      <div className="flex items-center gap-3">
-        <div className="w-2 h-2 rounded-full bg-green-400 pulse-dot" />
-        <span className="text-white/60 text-sm"><span className="text-white font-bold">2</span> agents currently active</span>
-      </div>
-
-      {/* Agent Cards */}
-      <div className="space-y-3">
+      {/* ── AGENT CARDS ── */}
+      <div className="space-y-4">
         {agents.map((agent, i) => {
           const Icon = agent.icon;
           return (
-            <div key={i} className="glass rounded-2xl p-4 flex items-center gap-4">
-              <div className={`w-12 h-12 rounded-2xl bg-gradient-to-br ${agent.gradient} flex items-center justify-center flex-shrink-0`}
-                style={agent.active ? { boxShadow: '0 4px 20px rgba(0,0,0,0.4)' } : {}}>
-                <Icon size={20} className="text-white" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <p className="text-white font-bold text-sm">{agent.name}</p>
-                  {agent.active && <div className="w-1.5 h-1.5 rounded-full bg-green-400 pulse-dot" />}
+            <div
+              key={i}
+              className="flex items-center justify-between rounded-2xl"
+              style={{
+                height: 80,
+                background: "rgba(255,255,255,0.05)",
+                border: "1px solid rgba(255,255,255,0.1)",
+                padding: "0 16px",
+              }}
+            >
+              {/* Left: icon + text */}
+              <div className="flex items-center gap-4">
+                <div
+                  className="flex items-center justify-center rounded-xl flex-shrink-0"
+                  style={{
+                    width: 48,
+                    height: 48,
+                    background: agent.gradient,
+                    boxShadow: agent.active ? "0 4px 20px rgba(0,0,0,0.3)" : "none",
+                  }}
+                >
+                  <Icon size={20} className="text-white" />
                 </div>
-                <p className="text-white/40 text-xs mt-0.5 truncate">{agent.desc}</p>
+                <div>
+                  <p className="text-white font-semibold" style={{ fontSize: 17 }}>{agent.name}</p>
+                  <p
+                    style={{
+                      fontSize: 14,
+                      fontWeight: 500,
+                      color: agent.active ? "#10B981" : "rgba(255,255,255,0.5)",
+                      marginTop: 2,
+                    }}
+                  >
+                    {agent.status}
+                    {agent.active && (
+                      <span
+                        className="inline-block pulse-dot rounded-full ml-1.5"
+                        style={{ width: 6, height: 6, background: "#10B981", verticalAlign: "middle" }}
+                      />
+                    )}
+                  </p>
+                </div>
               </div>
-              <div className={`px-2.5 py-1 rounded-full text-xs font-semibold ${agent.active ? 'bg-green-400/20 text-green-400' : 'glass text-white/40'}`}>
-                {agent.status}
-              </div>
+
+              {/* Right: status dot */}
+              <div
+                className={`rounded-full flex-shrink-0 ${agent.active ? "pulse-dot" : ""}`}
+                style={{
+                  width: 8,
+                  height: 8,
+                  background: agent.active ? "#10B981" : "rgba(107,107,107,0.5)",
+                }}
+              />
             </div>
           );
         })}
       </div>
 
-      {/* Create Button */}
-      <button className="w-full glass rounded-2xl py-4 flex items-center justify-center gap-2 border border-dashed border-white/20 hover:border-white/40 transition-all">
-        <Plus size={16} className="text-white/60" />
-        <span className="text-white/60 font-semibold text-sm">Create New Agent</span>
+      {/* ── CREATE BUTTON ── */}
+      <button
+        className="w-full flex items-center justify-center gap-2 rounded-2xl transition-colors"
+        style={{
+          height: 72,
+          background: "transparent",
+          border: "1px dashed rgba(255,255,255,0.2)",
+          fontSize: 17,
+          fontWeight: 500,
+          color: "rgba(255,255,255,0.5)",
+          minHeight: 44,
+        }}
+        onMouseEnter={e => (e.currentTarget.style.background = "rgba(255,255,255,0.05)")}
+        onMouseLeave={e => (e.currentTarget.style.background = "transparent")}
+      >
+        <Plus size={20} style={{ color: "rgba(255,255,255,0.5)" }} />
+        Create New Agent
       </button>
 
-      {/* Info card */}
-      <div className="glass-strong rounded-2xl p-4 flex items-start gap-3">
-        <div className="w-8 h-8 rounded-xl gradient-ruby flex items-center justify-center flex-shrink-0 mt-0.5">
-          <Zap size={14} className="text-white" />
+      {/* ── PRO UPSELL ── */}
+      <div
+        className="flex items-start gap-3 rounded-2xl"
+        style={{
+          background: "rgba(255,255,255,0.05)",
+          border: "1px solid rgba(255,255,255,0.1)",
+          padding: 16,
+        }}
+      >
+        <div
+          className="flex items-center justify-center rounded-xl flex-shrink-0 mt-0.5"
+          style={{ width: 40, height: 40, background: "linear-gradient(135deg, #DC2626, #F472B6, #A855F7)" }}
+        >
+          <Zap size={16} className="text-white" />
         </div>
         <div>
-          <p className="text-white font-semibold text-sm">Upgrade to PRO</p>
-          <p className="text-white/50 text-xs mt-0.5">Unlock unlimited agents, faster responses, and advanced automation.</p>
+          <p className="text-white font-semibold" style={{ fontSize: 15 }}>Upgrade to PRO</p>
+          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginTop: 2 }}>
+            Unlock unlimited agents, faster responses, and advanced automation.
+          </p>
         </div>
       </div>
     </div>
