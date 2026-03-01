@@ -71,3 +71,19 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+
+## Build output
+
+Running `npm run build` compiles the project with Vite and produces the following files in the `dist/` folder:
+
+| File | Size | Gzip |
+|------|------|------|
+| `index.html` | 1.13 kB | 0.48 kB |
+| `assets/index-*.js` | 332.23 kB | 103.92 kB |
+| `assets/index-*.css` | 60.52 kB | 10.88 kB |
+| `assets/ruby-gem-*.gif` | 2,423.86 kB | — |
+| `favicon.ico` | — | — |
+| `placeholder.svg` | — | — |
+| `robots.txt` | — | — |
+
+The build bundles **1,669 modules** (all TypeScript/TSX source files, React components, hooks, pages, and third-party dependencies) into an optimized JavaScript bundle and a single CSS file, with static assets copied as-is.
